@@ -1,0 +1,18 @@
+.header-default {
+    margin: 0;
+}
+
+.header-default__cont {
+    max-width: 1366px;
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.header-default__title {
+    font-size: 30px;
+    color: #fff;
+    float: left;
+    margin: 0;
+}

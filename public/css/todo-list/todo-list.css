@@ -1,0 +1,18 @@
+.list-group {
+    max-width: 800px;
+    margin: auto;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+#main .list-group .list-group-item:hover {
+    background: #343a40;
+    color: #fff;
+}
+
+.list-group-item:hover .badge-primary {
+    color: #343a40;
+    background-color: #fff;
+}
