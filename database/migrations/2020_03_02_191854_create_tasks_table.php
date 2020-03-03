@@ -15,10 +15,11 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('todo_list_id')->references('id')->on('todo_list')->onDelete('cascade');
+            $table->bigInteger('todo_list_id')->references('id')->on('todo_lists')->onDelete('cascade');
             $table->string('name');
             $table->dateTime('deadline');
             $table->boolean('completed');
+            $table->boolean('disabled');
             $table->timestamps();
         });
     }

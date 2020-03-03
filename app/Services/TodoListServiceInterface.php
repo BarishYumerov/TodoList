@@ -2,10 +2,13 @@
 
 namespace App\Services;
 
-use App\TodoList;
+use App\Models\TodoList;
 
 interface TodoListServiceInterface
 {
-    public function getAll(): array;
-    public function getById($id);
+    public function get(): iterable;
+
+    public function getById($id, $settings = []);
+
+    public function add(string $name, bool $completed = false): ?TodoList;
 }

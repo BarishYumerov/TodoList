@@ -13,7 +13,7 @@ class CreateTodoListTable extends Migration
      */
     public function up()
     {
-        Schema::create('todo_list', function (Blueprint $table) {
+        Schema::create('todo_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->boolean('completed');
@@ -28,6 +28,6 @@ class CreateTodoListTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('todo_list');
+        Schema::dropIfExists('todo_lists');
     }
 }

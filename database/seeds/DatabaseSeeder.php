@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\TodoList;
+use App\Models\Task;
 
 class DatabaseSeeder extends Seeder
 {
@@ -10,27 +11,60 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+    private $todoListsData = [
+        'shopping' => [
+            ['name' => 'milk', 'completed' => false],
+            ['name' => 'tomatoes', 'completed' => true],
+            ['name' => 'potatoes', 'completed' => true]
+        ],
+        'chores' => [
+            ['name' => 'clean the kitchen', 'completed' => true],
+            ['name' => 'throw the garbage', 'completed' => false],
+            ['name' => 'wash the dishes', 'completed' => true]
+        ],
+        'work' => [
+            ['name' => 'do code review', 'completed' => false],
+            ['name' => 'write unit tests', 'completed' => false],
+            ['name' => 'discuss database optimizations', 'completed' => true]
+        ]
+    ];
+
     public function run()
     {
-        DB::table('todo_list')->insert([ 'name' => 'shopping', 'completed' => false ]);
-        DB::table('todo_list')->insert([ 'name' => 'chores', 'completed' => false ]);
-        DB::table('todo_list')->insert([ 'name' => 'work', 'completed' => false ]);
 
         $oneWeekDeadlineTime = strtotime("+7 day");
 
         $oneWeekDeadline = date('Y-m-d H:i:s', $oneWeekDeadlineTime);
         $noTimeDeadline = date('Y-m-d H:i:s');
 
-        DB::table('tasks')->insert([ 'todo_list_id' => 1, 'name' => 'milk', 'deadline' => $noTimeDeadline, 'completed' => false ]);
-        DB::table('tasks')->insert([ 'todo_list_id' => 1, 'name' => 'tomatoes', 'deadline' => $noTimeDeadline, 'completed' => true ]);
-        DB::table('tasks')->insert([ 'todo_list_id' => 1, 'name' => 'potatoes', 'deadline' => $oneWeekDeadline, 'completed' => true ]);
+        foreach ($this->todoListsData as $todoListName => $tasks) {
+            $todoList = TodoList::query()->where('name', $todoListName)->first();
 
-        DB::table('tasks')->insert([ 'todo_list_id' => 2, 'name' => 'clean the kitchen', 'deadline' => $oneWeekDeadline, 'completed' => true ]);
-        DB::table('tasks')->insert([ 'todo_list_id' => 2, 'name' => 'throw the garbage', 'deadline' => $noTimeDeadline, 'completed' => false ]);
-        DB::table('tasks')->insert([ 'todo_list_id' => 2, 'name' => 'wash the dishes', 'deadline' => $oneWeekDeadline, 'completed' => true ]);
+            if (!$todoList) {
+                $todoList = new TodoList();
+                $todoList->name = $todoListName;
+                $todoList->completed = false;
+                $todoList->save();
+            }
 
-        DB::table('tasks')->insert([ 'todo_list_id' => 3, 'name' => 'do code review', 'deadline' => $oneWeekDeadline, 'completed' => false ]);
-        DB::table('tasks')->insert([ 'todo_list_id' => 3, 'name' => 'write unit tests', 'deadline' => $oneWeekDeadline, 'completed' => false ]);
-        DB::table('tasks')->insert([ 'todo_list_id' => 3, 'name' => 'discuss database optimizations', 'deadline' => $noTimeDeadline, 'completed' => true ]);
+
+            foreach ($tasks as $taskIndex => $taskData) {
+                $task = Task::query()->where('todo_list_id', $todoList->id)->where('name', $taskData['name'])->first();
+
+                if (!$task) {
+                    $task = new Task();
+                    $task->todo_list_id = $todoList->id;
+                    $task->name = $taskData['name'];
+                    if ($taskIndex % 2 == 0) {
+                        $task->deadline = $oneWeekDeadline;
+                    } else {
+                        $task->deadline = $noTimeDeadline;
+                    }
+                    $task->completed = false;
+                    $task->disabled = false;
+                    $task->save();
+                }
+            }
+        }
     }
 }
