@@ -24,7 +24,7 @@
                         <th scope="col" class="small-td center">{{{__('lang.completed')}}}</th>
                         <th scope="col" class="small-td center">{{{__('lang.disabled')}}}</th>
                     </tr>
-                    @foreach($todoList['tasks'] as $taskIndex => $task)
+                    @foreach($todoList->tasks as $taskIndex => $task)
                         <tr id="task-row-{{$task->id}}">
                             <td>{{{$task->id}}}</td>
                             <td>
@@ -46,7 +46,7 @@
                                                                @if($task->disabled == 1) checked @endif></td>
                         </tr>
                     @endforeach
-                    <tr id="task-row-{{$task->id}}">
+                    <tr>
                         <td>New Task</td>
                         <td>
                             <input type="text" name="NewTask[name]" placeholder="{{{__('lang.name')}}}"
