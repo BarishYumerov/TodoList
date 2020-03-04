@@ -25,7 +25,7 @@
 
 #main .list-group .list-group-item.completed {
     color: green!important;
-    border-color: green!important;
+    font-weight: bold;
 }
 
 .list-group h3 {

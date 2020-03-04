@@ -16,21 +16,23 @@
         @enderror
     </div>
 
-    <div class="list-group">
-        <h3>{{{__('lang.tasks') }}}:</h3>
-        <table class="table">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">{{{__('lang.name')}}}</th>
-                <th scope="col">{{{__('lang.deadline')}}}</th>
-                <th scope="col" class="small-td center">{{{__('lang.completed')}}}</th>
-                <th scope="col" class="small-td center">{{{__('lang.disabled')}}}</th>
-            </tr>
-            @foreach($todoList->tasks as $taskIndex => $task)
-                @include('todo-list.manage-todo-list-task')
-            @endforeach
+    @if(count($todoList->tasks))
+        <div class="list-group">
+            <h3>{{{__('lang.tasks') }}}:</h3>
+            <table class="table">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">{{{__('lang.name')}}}</th>
+                    <th scope="col">{{{__('lang.deadline')}}}</th>
+                    <th scope="col" class="small-td center">{{{__('lang.completed')}}}</th>
+                    <th scope="col" class="small-td center">{{{__('lang.disabled')}}}</th>
+                </tr>
+                @foreach($todoList->tasks as $taskIndex => $task)
+                    @include('todo-list.manage-todo-list-task')
+                @endforeach
 
-        </table>
-    </div>
+            </table>
+        </div>
+    @endif
     <button type="submit" class="btn btn-primary">{{{__('lang.edit')}}}</button>
 </form>
