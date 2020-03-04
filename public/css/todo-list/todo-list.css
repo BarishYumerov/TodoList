@@ -23,6 +23,11 @@
     color: #fff;
 }
 
+#main .list-group .list-group-item.completed {
+    color: green!important;
+    border-color: green!important;
+}
+
 .list-group h3 {
     margin-bottom: 30px;
 }

@@ -68,7 +68,23 @@ class TodoListService implements TodoListServiceInterface
             'name' => $input['name']
         ];
 
+        if($this->checkIfTodoListIsCompleted($id)) {
+            $updateDta['completed'] = true;
+        } else {
+            $updateDta['completed'] = false;
+        }
+
         return $this->todoListRepository->update($id, $updateDta);
+    }
+
+    private function checkIfTodoListIsCompleted($id): bool {
+        $editableTasks = $this->taskRepository->getEditableTasks($id);
+        foreach($editableTasks as $editableTask) {
+            if(!$editableTask->completed) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private function manageEditTasks($id, $input)

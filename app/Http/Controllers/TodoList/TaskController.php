@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\TodoList;
 
 use App\Http\Controllers\Controller;
-use App\Libs\Printer;
 use App\Services\TaskService;
-use App\Services\TodoListService;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller

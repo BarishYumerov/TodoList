@@ -1,5 +1,5 @@
 <h3>
-    {{{ __('lang.manage_todo_list') }}}: <b>{{{$todoList->name}}}</b>
+    {{{ __('lang.manage_todo_list') }}}: <b>{{{$todoList->name}}}</b> {{{$todoList->completed == 1 ? ' - completed' : ''}}}
     <form id="delete-todo-list-form" action="/todo-lists/{{{$todoList->id}}}/delete" method="post">
         @csrf
         <button id="delete-todo-list" type="submit" data-content="5"

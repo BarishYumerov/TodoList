@@ -8,8 +8,8 @@
             <h3>{{ __('lang.my_todo_lists') }}</h3>
             @foreach($todoLists as $todoList)
                 <a href="/todo-lists/{{{$todoList->id}}}"
-                   class="list-group-item bg-light d-flex justify-content-between align-items-center">
-                    {{{$todoList->name}}}
+                   class="list-group-item bg-light d-flex justify-content-between align-items-center {{{$todoList->completed == 1 ? 'completed' : ''}}}">
+                    {{{$todoList->name}}} {{{$todoList->completed == 1 ? ' - completed' : ''}}}
                     <span class="badge badge-primary badge-pill">{{{count($todoList->tasks)}}}</span>
                 </a>
             @endforeach

@@ -3,17 +3,21 @@
 namespace App\Services;
 
 use App\Models\Task;
-use App\Repository\Eloquent\TaskRepository;
+use App\Repository\TaskRepositoryInterface;
+use App\Repository\TodoListRepositoryInterface;
 
 class TaskService implements TaskServiceInterface
 {
     private $taskRepository;
+    private $todoListRepository;
 
     public function __construct(
-        TaskRepository $taskRepository
+        TaskRepositoryInterface $taskRepository,
+        TodoListRepositoryInterface $todoListRepository
     )
     {
         $this->taskRepository = $taskRepository;
+        $this->todoListRepository = $todoListRepository;
     }
 
     public function getAddTaskValidationRules()
@@ -34,6 +38,9 @@ class TaskService implements TaskServiceInterface
         $newTask->completed = isset($input['new_task_completed']) ? 1 : 0;
         $newTask->disabled = isset($input['new_task_disabled']) ? 1 : 0;
 
+        if($newTask->completed !== 1) {
+            $this->todoListRepository->update($input['new_task_todo_list_id'], ['completed' => false]);
+        }
         return $this->taskRepository->add($newTask);
     }
 
