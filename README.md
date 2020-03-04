@@ -1,6 +1,7 @@
 #TODO LIST
-Please run the following command to build and seed the database
 
+#### Copy .env.example to .env (base homestead settings)
+#### Please run the following command to build and seed the database
 `php artisan migrate:refresh --seed`
 
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
