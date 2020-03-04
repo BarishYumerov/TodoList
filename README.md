@@ -1,4 +1,4 @@
-#TODO LIST
+# TODO LIST
 
 #### Copy .env.example to .env (base homestead settings)
 #### Please run the following command to build and seed the database
