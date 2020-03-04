@@ -21,8 +21,8 @@ class TodoListController extends Controller
             'name' => 'required|min:1',
         ]);
 
-        $todoListService->add($request->input('name'));
-        return redirect('/');
+        $newTodoList = $todoListService->add($request->input('name'));
+        return redirect('/todo-lists/' . $newTodoList->id);
     }
 
     public function manageTodoList($id, TodoListService $todoListService)
@@ -38,7 +38,7 @@ class TodoListController extends Controller
     public function submitManageTodoList($id, Request $request, TodoListService $todoListService)
     {
         $input = $request->all();
-        $rules = $todoListService->getManageTodoListValidationRules($input);
+        $rules = $todoListService->getManageTodoListValidationRules();
         $request->validate($rules);
 
         $todoListService->manageTodoList($id, $input);

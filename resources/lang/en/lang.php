@@ -8,7 +8,10 @@ return [
     'todo_list_name' => 'Todo list name',
     'tasks' => 'Tasks',
     'name' => 'Name',
+    'deadline' => 'Deadline',
     'completed' => 'Completed',
     'disabled' => 'Disabled',
-    'deadline' => 'Deadline'
+    'edit' => 'Edit',
+    'add' => 'Add',
+    'add_new_task' => 'Add new task'
 ];

@@ -16,3 +16,6 @@ Route::get('/test', 'TodoList\TodoListController@todoLists');
 Route::post('/todo-lists', 'TodoList\TodoListController@addTodoList');
 Route::get('/todo-lists/{id}', 'TodoList\TodoListController@manageTodoList');
 Route::post('/todo-lists/{id}', 'TodoList\TodoListController@submitManageTodoList');
+Route::post('/todo-lists/{id}', 'TodoList\TodoListController@submitManageTodoList');
+
+Route::post('/tasks', 'TodoList\TaskController@addTask');

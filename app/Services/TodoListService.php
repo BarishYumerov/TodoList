@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Libs\Printer;
-use App\Models\Task;
 use App\Repository\Eloquent\TaskRepository;
 use App\Repository\TodoListRepositoryInterface;
 use App\Models\TodoList;
@@ -41,57 +40,22 @@ class TodoListService implements TodoListServiceInterface
         return $this->todoListRepository->add($todoList);
     }
 
-    public function getManageTodoListValidationRules($input)
+    public function getManageTodoListValidationRules()
     {
-        $rules = [
+        return [
             'name' => 'required|min:1',
+            'Tasks.*.id' => 'required|exists:tasks,id',
             'Tasks.*.name' => 'required|min:1',
             'Tasks.*.deadline' => 'required|date'
         ];
-
-        if ($this->checkIfAddingNewTask($input)) {
-            $rules['NewTask.name'] = 'required|min:1';
-            $rules['NewTask.deadline'] = 'required|date';
-        }
-
-        return $rules;
-    }
-
-    private function checkIfAddingNewTask($input): bool
-    {
-        if (
-            (isset($input['NewTask']) && isset($input['NewTask']['name']) && !empty($input['NewTask']['name'])) ||
-            (isset($input['NewTask']['deadline']) && !empty($input['NewTask']['deadline']))
-        ) {
-            return true;
-        }
-
-        return false;
     }
 
     public function manageTodoList($id, $input)
     {
         DB::beginTransaction();
-        $this->manageNewTask($id, $input);
         $this->manageEditTasks($id, $input);
         $this->updateTodoList($id, $input);
         DB::commit();
-    }
-
-    private function manageNewTask($id, $input): ?Task
-    {
-        if ($this->checkIfAddingNewTask($input)) {
-            $newTask = new Task();
-            $newTask->todo_list_id = $id;
-            $newTask->name = $input['NewTask']['name'];
-            $newTask->deadline = $input['NewTask']['deadline'];
-            $newTask->completed = isset($input['NewTask']['completed']) ? 1 : 0;
-            $newTask->disabled = isset($input['NewTask']['disabled']) ? 1 : 0;
-
-            return $this->taskRepository->add($newTask);
-        }
-
-        return null;
     }
 
     private function updateTodoList($id, $input)
@@ -118,7 +82,7 @@ class TodoListService implements TodoListServiceInterface
         $editableTasksIds = $this->getEditableTasksIds($editableTasks);
 
         foreach ($input['Tasks'] as $taskId => $taskData) {
-            if (!in_array($taskId, $editableTasksIds)) {
+            if (!in_array($taskData['id'], $editableTasksIds)) {
                 continue;
             }
 
@@ -128,7 +92,7 @@ class TodoListService implements TodoListServiceInterface
                 'disabled' => isset($taskData['disabled']) ? true : false
             ];
 
-            if ($this->checkIfTaskIsCompletable($taskId, $editableTasks)) {
+            if ($this->checkIfTaskIsCompletable($taskData['id'], $editableTasks)) {
                 if(isset($taskData['completed'])) {
                     $updateTaskData['completed'] = true;
                 } else {
@@ -136,7 +100,7 @@ class TodoListService implements TodoListServiceInterface
                 }
             }
 
-            $this->taskRepository->update($taskId, $updateTaskData);
+            $this->taskRepository->update($taskData['id'], $updateTaskData);
         }
     }
 
@@ -152,7 +116,7 @@ class TodoListService implements TodoListServiceInterface
     private function checkIfTaskIsCompletable($taskId, $editableTasks): bool
     {
         foreach ($editableTasks as $editableTask) {
-            if ($editableTask->id === $taskId && !$editableTask->disabled) {
+            if ($editableTask->id == $taskId && !$editableTask->disabled) {
                 return true;
             }
         }
