@@ -1,6 +1,12 @@
-
+<h3>
+    {{{ __('lang.manage_todo_list') }}}: <b>{{{$todoList->name}}}</b>
+    <form id="delete-todo-list-form" action="/todo-lists/{{{$todoList->id}}}/delete" method="post">
+        @csrf
+        <button id="delete-todo-list" type="submit" data-content="5"
+                class="btn btn-danger float-right">{{{__('lang.delete')}}}</button>
+    </form>
+</h3>
 <form class="manage-todo-list__form" method="post" action="/todo-lists/{{{$todoList->id}}}">
-    <h3>{{{ __('lang.manage_todo_list') }}}: <b>{{{$todoList->name}}}</b></h3>
     @csrf
     <div class="form-group">
         <label for="name">{{ __('lang.name') }}</label>

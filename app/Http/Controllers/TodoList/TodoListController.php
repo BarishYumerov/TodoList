@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\TodoList;
 
 use App\Http\Controllers\Controller;
-use App\Libs\Printer;
 use App\Services\TodoListService;
 use Illuminate\Http\Request;
 
@@ -31,8 +30,9 @@ class TodoListController extends Controller
         if (!$todoList) {
             abort(404);
         }
+        $currentTime = strtotime(date('Y-m-d H:i'));
 
-        return view('todo-list.manage-todo-list', ['todoList' => $todoList]);
+        return view('todo-list.manage-todo-list', ['todoList' => $todoList, 'currentTime' => $currentTime]);
     }
 
     public function submitManageTodoList($id, Request $request, TodoListService $todoListService)
@@ -43,5 +43,11 @@ class TodoListController extends Controller
 
         $todoListService->manageTodoList($id, $input);
         return redirect('/todo-lists/' . $id);
+    }
+
+    public function delete($id, TodoListService $todoListService)
+    {
+        $todoListService->delete($id);
+        return redirect('/');
     }
 }

@@ -1,4 +1,3 @@
-
 <form class="manage-todo-list__form" method="post" action="/tasks">
     <h3>{{{__('lang.add_new_task')}}}</h3>
     @csrf

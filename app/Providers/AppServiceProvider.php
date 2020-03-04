@@ -17,8 +17,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(TodoListServiceInterface::class, function () { return new TodoListService(); });
-        $this->app->singleton(TaskServiceInterface::class, function () { return new TaskService(); });
+        $this->app->singleton(TodoListServiceInterface::class, function () {
+            return new TodoListService();
+        });
+        $this->app->singleton(TaskServiceInterface::class, function () {
+            return new TaskService();
+        });
     }
 
     /**

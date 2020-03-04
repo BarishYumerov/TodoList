@@ -17,12 +17,8 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(TodoListRepositoryInterface::class, function () {
-            return new TodoListRepository();
-        });
-        $this->app->singleton(TaskRepositoryInterface::class, function () {
-            return new TaskRepository();
-        });
+        $this->app->bind(TodoListRepositoryInterface::class, TodoListRepository::class);
+        $this->app->bind(TaskRepositoryInterface::class, TaskRepository::class);
     }
 
     /**

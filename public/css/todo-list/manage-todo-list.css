@@ -18,3 +18,12 @@
 .alert.alert-danger {
     margin-top: 5px;
 }
+
+#delete-todo-list {
+    padding: 4px 10px;
+}
+
+#delete-todo-list-form {
+    float: right;
+    margin-top: 1px;
+}

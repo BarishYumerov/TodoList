@@ -13,5 +13,6 @@ return [
     'disabled' => 'Disabled',
     'edit' => 'Edit',
     'add' => 'Add',
-    'add_new_task' => 'Add new task'
+    'add_new_task' => 'Add new task',
+    'delete' => 'Delete'
 ];

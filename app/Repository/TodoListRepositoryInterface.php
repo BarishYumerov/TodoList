@@ -15,4 +15,6 @@ interface TodoListRepositoryInterface
     public function add(TodoList $todoList): TodoList;
 
     public function update($id, $updateData): bool;
+
+    public function delete($id): bool;
 }

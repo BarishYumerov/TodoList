@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function addTask(Request $request, TaskService $taskService) {
+    public function addTask(Request $request, TaskService $taskService)
+    {
         $input = $request->all();
         $rules = $taskService->getAddTaskValidationRules();
         $request->validate($rules);

@@ -31,11 +31,8 @@ class DatabaseSeeder extends Seeder
 
     public function run()
     {
-
-        $oneWeekDeadlineTime = strtotime("+7 day");
-
-        $oneWeekDeadline = date('Y-m-d H:i:s', $oneWeekDeadlineTime);
-        $noTimeDeadline = date('Y-m-d H:i:s');
+        $oneWeekDeadline = date('Y-m-d H:i:s', strtotime("+7 day"));
+        $noTimeDeadline = date('Y-m-d H:i:s', strtotime("-2 day"));
 
         foreach ($this->todoListsData as $todoListName => $tasks) {
             $todoList = TodoList::query()->where('name', $todoListName)->first();

@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Libs\Printer;
-use App\Repository\Eloquent\TaskRepository;
+use App\Repository\TaskRepositoryInterface;
 use App\Repository\TodoListRepositoryInterface;
 use App\Models\TodoList;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +14,7 @@ class TodoListService implements TodoListServiceInterface
 
     public function __construct(
         TodoListRepositoryInterface $todoListRepository,
-        TaskRepository $taskRepository
+        TaskRepositoryInterface $taskRepository
     )
     {
         $this->todoListRepository = $todoListRepository;
@@ -58,6 +57,11 @@ class TodoListService implements TodoListServiceInterface
         DB::commit();
     }
 
+    public function delete($id): bool
+    {
+        return $this->todoListRepository->delete($id);
+    }
+
     private function updateTodoList($id, $input)
     {
         $updateDta = [
@@ -93,7 +97,7 @@ class TodoListService implements TodoListServiceInterface
             ];
 
             if ($this->checkIfTaskIsCompletable($taskData['id'], $editableTasks)) {
-                if(isset($taskData['completed'])) {
+                if (isset($taskData['completed'])) {
                     $updateTaskData['completed'] = true;
                 } else {
                     $updateTaskData['completed'] = false;

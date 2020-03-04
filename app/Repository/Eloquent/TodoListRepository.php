@@ -1,10 +1,7 @@
 <?php
 
-
 namespace App\Repository\Eloquent;
 
-
-use App\Models\Task;
 use App\Models\TodoList;
 use App\Repository\TodoListRepositoryInterface;
 
@@ -48,5 +45,10 @@ class TodoListRepository implements TodoListRepositoryInterface
     public function update($id, $updateData): bool
     {
         return TodoList::query()->where('id', $id)->update($updateData);
+    }
+
+    public function delete($id): bool
+    {
+        return TodoList::query()->where('id', $id)->delete();
     }
 }

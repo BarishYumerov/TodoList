@@ -11,4 +11,10 @@ interface TodoListServiceInterface
     public function getById($id, $settings = []);
 
     public function add(string $name, bool $completed = false): ?TodoList;
+
+    public function getManageTodoListValidationRules();
+
+    public function manageTodoList($id, $input);
+
+    public function delete($id): bool;
 }
